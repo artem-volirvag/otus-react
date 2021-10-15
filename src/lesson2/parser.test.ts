@@ -12,6 +12,14 @@ describe("Parser correct cases", () => {
   it("1 + 32 - 2 + 2", () => {
     expect(parser("1 + 32 - 2 + 2")).toEqual([1, "+", 32, "-", 2, "+", 2]);
   });
+
+  it("2 ^ 2 - 2 + 2", () => {
+    expect(parser("2 ^ 2 - 2 + 2")).toEqual([2, "^", 2, "-", 2, "+", 2]);
+  });
+
+  it("2 ** - 2 + 2", () => {
+    expect(parser("2 ** - 2 + 2")).toEqual([2, "**", "-", 2, "+", 2]);
+  });
 });
 
 describe("Parser invalid cases", () => {
