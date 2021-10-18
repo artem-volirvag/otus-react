@@ -37,3 +37,37 @@ describe("Runner long cases", () => {
     expect(runner("20 - 10 * 10 / 5 - 3")).toEqual(-3);
   });
 });
+
+describe("Runner exp cases", () => {
+  it("2 ^ 2", () => {
+    expect(runner("2 ^ 2")).toEqual(4);
+  });
+
+  it("2 ^ 2 + 1", () => {
+    expect(runner("2 ^ 2 + 1")).toEqual(5);
+  });
+
+  it("3 * 2 ^ 2", () => {
+    expect(runner("3 * 2 ^ 2")).toEqual(12);
+  });
+});
+
+describe("Runner squ cases", () => {
+  it("3 **", () => {
+    expect(runner("3 **")).toEqual(9);
+  });
+
+  it("2 * 3 ** + 1", () => {
+    expect(runner("2 * 3 ** + 1")).toEqual(19);
+  });
+});
+
+describe("Runner factorial cases", () => {
+  it("3 !", () => {
+    expect(runner("3 !")).toEqual(6);
+  });
+
+  it("2 * 3 ! + 1", () => {
+    expect(runner("2 * 3 ! + 1")).toEqual(13);
+  });
+});
