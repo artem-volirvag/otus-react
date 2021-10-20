@@ -1,3 +1,13 @@
-export const add = (one: number, two: number) => one * two;
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-console.log(add(2, 2));
+const App = () => {
+  return <div>Hello World!</div>;
+};
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);

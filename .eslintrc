@@ -2,16 +2,28 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    "react/prop-types": 0
   },
   "parserOptions": {
-    "sourceType": "module",
-    "parser": "babel-eslint",
-    "ecmaVersion": 2018
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
   },
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
   "overrides": [
     {
       "files": ["webpack.config.js"],
