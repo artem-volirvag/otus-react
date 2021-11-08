@@ -24,7 +24,7 @@ interface CellProps extends CellStyledProps {
   num?: number;
 }
 
-const Cell = (props: CellProps) => {
+const Cell: React.FC<CellProps> = (props) => {
   const { cellState, num } = props;
 
   const [isOutNum, setIsOutNum] = useState(false);

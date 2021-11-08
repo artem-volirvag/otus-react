@@ -8,15 +8,11 @@
     "start": "webpack serve --mode=development --node-env=development",
     "lint": "eslint --ext .ts,.tsx --fix ./",
     "test": "jest",
+    "test:loki": "loki test",
     "check": "npm test && npm run lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run check",
-      "pre-push": "npm run check"
-    }
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -53,7 +49,7 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^5.4.0",
-    "husky": "^7.0.2",
+    "husky": "^7.0.0",
     "jest": "^27.3.0",
     "loki": "^0.28.1",
     "prettier": "^2.4.1",

@@ -11,7 +11,7 @@ interface BoardProps {
   cellsData: CellsData;
 }
 
-const Board = ({ cellsData }: BoardProps) => {
+const Board: React.FC<BoardProps> = ({ cellsData }) => {
   if (!cellsData || cellsData.length === 0) return null;
 
   let cellNum = 0;
@@ -23,7 +23,11 @@ const Board = ({ cellsData }: BoardProps) => {
           {row.map((cellState, iCell) => {
             cellNum++;
             return (
-              <Cell cellState={cellState} num={cellNum} key={iRow + iCell} />
+              <Cell
+                cellState={cellState}
+                num={cellNum}
+                key={`${iRow}${iCell}`}
+              />
             );
           })}
         </RowStyled>

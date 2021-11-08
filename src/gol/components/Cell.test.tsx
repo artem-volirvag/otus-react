@@ -8,7 +8,6 @@ describe('Cell', () => {
     const cellNum = 10;
     const { container } = render(<Cell cellState={1} num={cellNum} />);
     const cell = container.firstChild;
-    // screen.debug();
     expect(cell).not.toBeNull();
     if (!cell) return;
 

@@ -3,7 +3,7 @@ import Board from './components/Board';
 
 function App() {
   return (
-    <div>
+    <>
       <h1>Game of life</h1>
       <Board
         cellsData={[
@@ -13,7 +13,7 @@ function App() {
           [1, 0, 1, 0],
         ]}
       />
-    </div>
+    </>
   );
 }
 
