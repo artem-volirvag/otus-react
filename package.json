@@ -8,7 +8,11 @@
     "start": "webpack serve --mode=development --node-env=development",
     "lint": "eslint --ext .ts,.tsx --fix ./",
     "test": "jest",
-    "check": "npm test && npm run lint"
+    "test:loki": "loki test",
+    "check": "npm test && npm run lint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -31,6 +35,13 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
+
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/react": "^6.3.12",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.2",
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.10",
@@ -44,8 +55,9 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^5.4.0",
-    "husky": "^7.0.2",
+    "husky": "^7.0.0",
     "jest": "^27.3.0",
+    "loki": "^0.28.1",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4",
     "webpack": "^5.58.2",
@@ -55,5 +67,20 @@
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.docker",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.docker",
+        "preset": "iPhone 7"
+      }
+    }
   }
 }
