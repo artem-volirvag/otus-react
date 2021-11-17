@@ -38,7 +38,7 @@ export default class CounterConainer extends Component<
     const counter = await getInitCounter();
     if (this?._isMounted) {
       this.setState({ counter });
-      if (this.props.isTimer) this.timer = setInterval(() => this.tick(), 2000);
+      if (this.props.isTimer) this.timer = setInterval(this.tick, 2000);
     }
   }
 
