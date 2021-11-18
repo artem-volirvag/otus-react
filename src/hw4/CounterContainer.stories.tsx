@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import CounterConainer from './CounterConainer';
+import CounterConainer from './CounterContainer';
 
 export default {
   title: 'Homework4/CounterConainer',

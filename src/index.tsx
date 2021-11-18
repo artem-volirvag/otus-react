@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CounterConainer from './hw4/CounterConainer';
+import CounterConainer from './hw4/CounterContainer';
 
 ReactDOM.render(
   <React.StrictMode>

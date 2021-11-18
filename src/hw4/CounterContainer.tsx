@@ -29,7 +29,7 @@ export default class CounterConainer extends Component<
     this.handleDec = this.handleDec.bind(this);
   }
 
-  timer: NodeJS.Timer | undefined;
+  timer: number | undefined;
   _isMounted = false;
 
   // 3. Описать componentDidMount как минимум в одном компоненте, получить в нем данные сервера(можно использовать заглушку или сторонние сервисы, например https://jsonplaceholder.typicode.com/). Описать подписку на событие
@@ -38,14 +38,14 @@ export default class CounterConainer extends Component<
     const counter = await getInitCounter();
     if (this?._isMounted) {
       this.setState({ counter });
-      if (this.props.isTimer) this.timer = setInterval(this.tick, 2000);
+      if (this.props.isTimer) this.timer = window.setInterval(this.tick, 2000);
     }
   }
 
   // 6. Описать componentWillUnmout в компоненте, где в рамках componentDidMount была подписка на событие, реализовать отписку от этого события
   componentWillUnMount() {
     this._isMounted = false;
-    if (this.timer) clearInterval(this.timer);
+    if (this.timer) window.clearInterval(this.timer);
   }
 
   // 5. Описать componentDidUpdate как минимум в одном компоненте, описать в нем условие реализовать обновление стейта при этом условии

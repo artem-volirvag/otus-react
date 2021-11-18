@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import CounterConainer from './CounterConainer';
+import CounterConainer from './CounterContainer';
 
 describe('CounterConainer', () => {
   test('after fetch CounterConainer', async () => {
