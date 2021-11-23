@@ -31,5 +31,14 @@ jobs:
             ${{ runner.OS }}-npm-cache-
 
       - run: npm install
-      - run: npm run chromatic
+
+        # 👇 Adds Chromatic as a step in the workflow
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        # Chromatic GitHub Action options
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
       - run: npm run deploy
