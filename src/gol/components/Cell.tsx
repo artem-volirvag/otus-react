@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import { CellState } from '../types';
+import { CellState, Coordinates } from '../types';
 
 interface CellStyledProps {
   cellState: CellState;
@@ -9,34 +9,30 @@ interface CellStyledProps {
 const CellStyled = styled.span`
   background-color: ${(props: CellStyledProps) =>
     props.cellState === 1 ? 'darkgray' : 'white'};
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  border: 1px solid grey;
-  margin: -1px 0 0 -1px;
-  overflow: hidden;
-  text-align: center;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  float: left;
+  display: block;
+  box-sizing: border-box;
 `;
 
 interface CellProps extends CellStyledProps {
-  num?: number;
+  onClick: (coord: Coordinates) => void;
+  x: number;
+  y: number;
 }
 
 const Cell: React.FC<CellProps> = (props) => {
-  const { cellState, num } = props;
-
-  const [isOutNum, setIsOutNum] = useState(false);
-
-  const handleOnClick = () => {
-    setIsOutNum(!isOutNum);
-  };
+  const { cellState, x, y, onClick } = props;
 
   return (
-    <CellStyled cellState={cellState} onClick={handleOnClick}>
-      {isOutNum ? num : ''}
-    </CellStyled>
+    <CellStyled
+      cellState={cellState}
+      data-testid={`${y}-${x}`}
+      onClick={() => onClick({ x, y })}
+    />
   );
 };
 

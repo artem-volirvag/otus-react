@@ -1,20 +1,18 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import Cell from './Cell';
+import { cellStateAlive } from '../constants';
 
 describe('Cell', () => {
   test('click Cell', () => {
-    const cellNum = 10;
-    const { container } = render(<Cell cellState={1} num={cellNum} />);
-    const cell = container.firstChild;
-    expect(cell).not.toBeNull();
-    if (!cell) return;
-
-    fireEvent.click(cell);
-    expect(screen.queryByText(`${cellNum}`)).toBeInTheDocument();
-
-    fireEvent.click(cell);
-    expect(screen.queryByText(`${cellNum}`)).not.toBeInTheDocument();
+    const onClick = jest.fn();
+    const x = 1;
+    const y = 2;
+    render(<Cell cellState={cellStateAlive} onClick={onClick} x={x} y={y} />);
+    userEvent.click(screen.getByTestId(`${y}-${x}`));
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledWith({ x, y });
   });
 });
