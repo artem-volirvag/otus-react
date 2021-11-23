@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const App = () => {
-  return <div>Hello World!</div>;
-};
+import CounterConainer from './hw4/CounterContainer';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <CounterConainer maxCounter={20} isTimer={true} />
   </React.StrictMode>,
   document.getElementById('root')
 );
