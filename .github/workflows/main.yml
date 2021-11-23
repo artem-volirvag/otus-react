@@ -33,6 +33,7 @@ jobs:
             ${{ runner.OS }}-npm-cache-
 
       - run: npm install
+      - run: npm build
 
         # 👇 Adds Chromatic as a step in the workflow
       - name: Publish to Chromatic
