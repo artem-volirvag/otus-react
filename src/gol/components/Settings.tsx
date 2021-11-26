@@ -55,7 +55,7 @@ function Settings(props: SettingsProps) {
   };
 
   return (
-    <FlexBox flexDirection={'vertical'}>
+    <FlexBox flexDirection={'vertical'} role="toolbar">
       <div>
         <label htmlFor="boardSizeX">Ширина поля</label>
         <InputRange

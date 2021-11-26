@@ -19,7 +19,7 @@ const Board: React.FC<BoardProps> = ({ cellsData, onCellClick }) => {
   if (!cellsData || cellsData.length === 0) return null;
 
   return (
-    <BoardStyled x={cellsData[0].length} y={cellsData.length}>
+    <BoardStyled x={cellsData[0].length} y={cellsData.length} role="main">
       {cellsData.map((row, iRow) => (
         <div key={iRow}>
           {row.map((cellState, iCell) => {
