@@ -18,31 +18,31 @@ export const originalTeamToExpectedTeam = (
   return { ...expectedTeam, roster: 25, name: "New York Badgers" };
 };
 
-// // Задание 2
-// type SomeArray = Array<number | string>;
+// Задание 2
+type SomeArray = Array<number | string>;
 
-const originalArrayToExpectedArray = (
+export const originalArrayToExpectedArray = (
   originalArray: SomeArray
-  // eslint-disable-next-line
-  // @ts-ignore
 ): SomeArray => {
-  //
+  const [, , ...expectedArray] = originalArray;
+  return ["two", ...expectedArray, 5];
 };
 
 // // Задание 3
+export type Team = {
+  name: string;
+  captain: {
+    name: string;
+    age: number;
+  };
+};
 
-// export type Team = {
-//   name: string;
-//   captain: {
-//     name: string;
-//     age: number;
-//   };
-// };
-
-export const originalTeamToExpectedTeam2 = (
-  originalTeam: Team
-  // eslint-disable-next-line
-  // @ts-ignore
-): Team => {
-  //
+export const originalTeamToExpectedTeam2 = (originalTeam: Team): Team => {
+  return {
+    ...originalTeam,
+    captain: {
+      ...originalTeam.captain,
+      age: 28,
+    },
+  };
 };
