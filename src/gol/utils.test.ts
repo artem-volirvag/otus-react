@@ -28,4 +28,35 @@ describe('Board utils', () => {
     expect(newBoard.length).toBe(newBoardSize.y);
     expect(newBoard[0].length).toBe(newBoardSize.x);
   });
+  test('generateBoard 10x10 50%', () => {
+    const settings = {
+      boardSize: { x: 10, y: 10 },
+      boardFillPercent: 50,
+    };
+    const board = generateBoard(settings);
+    expect(board.length).toBe(settings.boardSize.y);
+    expect(board[0].length).toBe(settings.boardSize.x);
+    const countAlive = board.reduce(
+      (sum, row) =>
+        sum + row.reduce((sumRow: number, cell) => sumRow + cell, 0),
+      0
+    );
+    expect(countAlive).toBe(50);
+  });
+
+  test('generateBoard 10x100 10%', () => {
+    const settings = {
+      boardSize: { x: 10, y: 100 },
+      boardFillPercent: 10,
+    };
+    const board = generateBoard(settings);
+    expect(board.length).toBe(settings.boardSize.y);
+    expect(board[0].length).toBe(settings.boardSize.x);
+    const countAlive = board.reduce(
+      (sum, row) =>
+        sum + row.reduce((sumRow: number, cell) => sumRow + cell, 0),
+      0
+    );
+    expect(countAlive).toBe(100);
+  });
 });

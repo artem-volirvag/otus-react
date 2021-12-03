@@ -1,4 +1,4 @@
-import { cellStateEmpty } from './constants';
+import { cellStateAlive, cellStateEmpty } from './constants';
 import { BoardSize, CellState, CellsData, GameSettings } from './types';
 
 export function generateBoardXY(
@@ -11,9 +11,25 @@ export function generateBoardXY(
 }
 
 export function generateBoard(settings: GameSettings): CellsData {
-  const { boardSize } = settings;
-  // тут будет логика заполнения поля исходя из начального кол-ва процентов
-  return generateBoardXY(boardSize, cellStateEmpty);
+  const { boardSize, boardFillPercent } = settings;
+  const isReverseFill = boardFillPercent > 50;
+  const boardCellsCount = boardSize.x * boardSize.y;
+  const countFillCells = Math.floor(boardCellsCount * (boardFillPercent / 100));
+  let countFill = isReverseFill
+    ? boardCellsCount - countFillCells
+    : countFillCells;
+  const init = isReverseFill ? cellStateAlive : cellStateEmpty;
+  const fill = isReverseFill ? cellStateEmpty : cellStateAlive;
+  const cellsData = generateBoardXY(boardSize, init);
+  while (countFill > 0) {
+    const x = Math.floor(Math.random() * boardSize.x);
+    const y = Math.floor(Math.random() * boardSize.y);
+    if (cellsData[y][x] !== fill) {
+      cellsData[y][x] = fill;
+      countFill--;
+    }
+  }
+  return cellsData;
 }
 
 export function resizeBoard(cellsData: CellsData, boardSize: BoardSize) {

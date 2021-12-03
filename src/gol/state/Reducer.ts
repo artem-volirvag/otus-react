@@ -25,8 +25,9 @@ export default function reducer(prevState: State, action: AppAction): State {
       return { ...prevState, cellsData: action.payload };
     case 'toggleCell':
       const coord = action.payload;
-      if (prevState.cellsData.length < coord.y) return prevState;
-      if (prevState.cellsData[coord.y].length < coord.x) return prevState;
+      if (prevState.cellsData.length < coord.y || coord.y < 0) return prevState;
+      if (coord.x < 0 || prevState.cellsData[coord.y].length < coord.x)
+        return prevState;
       const cellsData = prevState.cellsData;
       cellsData[coord.y][coord.x] =
         cellsData[coord.y][coord.x] === cellStateAlive
