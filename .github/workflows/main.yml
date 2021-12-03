@@ -1,7 +1,7 @@
-name: CI_my-homework5
+name: CI_my-homework*
 on:
   push:
-    branches: [ my-homework5 ]
+    branches: [ my-homework* ]
 #  pull_request:
 #    branches: [ master ]
 
