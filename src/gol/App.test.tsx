@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 global.Storage.prototype.getItem = jest.fn(() => 'test user');
 global.Storage.prototype.setItem = jest.fn();
@@ -10,9 +10,9 @@ global.Storage.prototype.setItem = jest.fn();
 describe('App', () => {
   test('render', () => {
     render(
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     );
     expect(screen.queryByRole('heading')).toBeInTheDocument();
     expect(screen.queryByRole('toolbar')).toBeInTheDocument();
@@ -23,9 +23,9 @@ describe('App', () => {
 
   test('change inputBoardSizeX', () => {
     render(
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     );
     const inputBoardSizeX = screen.getByTestId('inputBoardSizeX');
     fireEvent.change(inputBoardSizeX, {
@@ -37,9 +37,9 @@ describe('App', () => {
 
   test('start pause', () => {
     render(
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     );
     fireEvent.click(screen.getByTestId('s-btn-start'));
     expect(screen.queryByTestId('s-btn-start')).not.toBeInTheDocument();

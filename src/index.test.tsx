@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import App from './gol/App';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import FormLogin from './gol/components/FormLogin';
 import { ROUTE } from './gol/constants';
 
@@ -11,12 +11,12 @@ describe('Index', () => {
     global.Storage.prototype.getItem = jest.fn(() => 'test user');
     global.Storage.prototype.setItem = jest.fn();
     render(
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path={ROUTE.ROOT} element={<App />} />
           <Route path={ROUTE.LOGIN} element={<FormLogin />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     );
     expect(screen.queryByRole('toolbar')).toBeInTheDocument();
     expect(screen.queryByRole('main')).toBeInTheDocument();
@@ -27,12 +27,12 @@ describe('Index', () => {
     global.Storage.prototype.getItem = jest.fn(() => null);
     global.Storage.prototype.setItem = jest.fn();
     render(
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path={ROUTE.ROOT} element={<App />} />
           <Route path={ROUTE.LOGIN} element={<FormLogin />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     );
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Старт' })).toBeInTheDocument();
