@@ -1,11 +1,11 @@
 import React, { useReducer } from 'react';
 import Board from './components/Board';
-import FormLogin from './components/FormLogin';
 import Settings from './components/Settings';
 import { FlexBox } from './elements/FlexBox';
 import reducer from './state/Reducer';
 import { GameSettings, State } from './types';
 import { generateBoard } from './utils';
+import { useLogin } from './useLogin';
 
 const initialSettings: GameSettings = {
   boardFillPercent: 15,
@@ -25,14 +25,21 @@ const initialState: State = {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const { login, onLogout } = useLogin();
+
+  if (!login) return null;
+
   return (
     <>
       <h1>Game of life</h1>
-      <FlexBox flexDirection={'vertical'}>
-        <FlexBox justifyContent={'center'}>
-          <FormLogin onSubmit={() => null} />
-        </FlexBox>
-        <FlexBox>
+      <FlexBox>
+        <FlexBox flexDirection={'vertical'}>
+          <div>
+            Здравствуйте, <strong>{login}</strong>
+          </div>
+          <button type="button" onClick={onLogout}>
+            Выход
+          </button>
           <Settings
             settings={state.settings}
             status={state.status}
@@ -46,15 +53,15 @@ function App() {
             onClear={() => dispatch({ type: 'clear' })}
             onPause={() => dispatch({ type: 'pause' })}
           />
-          <div>
-            <Board
-              cellsData={state.cellsData}
-              onCellClick={(coord) =>
-                dispatch({ type: 'toggleCell', payload: coord })
-              }
-            />
-          </div>
         </FlexBox>
+        <div>
+          <Board
+            cellsData={state.cellsData}
+            onCellClick={(coord) =>
+              dispatch({ type: 'toggleCell', payload: coord })
+            }
+          />
+        </div>
       </FlexBox>
     </>
   );
