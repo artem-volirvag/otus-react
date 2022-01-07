@@ -1,7 +1,8 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 
-import { LOCAL_STORAGE_LOGIN_KEY, useLogin } from './useLogin';
+import { useLogin } from './useLogin';
 import { ROUTE } from './constants';
+import { LOCAL_STORAGE_LOGIN_KEY } from './localStorage';
 
 const mockNavigate = jest.fn();
 

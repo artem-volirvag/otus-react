@@ -1,16 +1,7 @@
+import { loadLogin, saveLogin } from './localStorage';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from './constants';
-
-export const LOCAL_STORAGE_LOGIN_KEY = 'login';
-
-export const saveLogin = (login: string) => {
-  localStorage.setItem(LOCAL_STORAGE_LOGIN_KEY, login);
-};
-
-export const loadLogin = () => {
-  return localStorage.getItem(LOCAL_STORAGE_LOGIN_KEY);
-};
 
 export function useLogin() {
   const navigate = useNavigate();
