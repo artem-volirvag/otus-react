@@ -25,3 +25,7 @@ export interface State {
 }
 
 export type GameStatus = State['status'];
+
+export interface UserState {
+  name: string;
+}
