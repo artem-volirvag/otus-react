@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FlexBox } from '../elements/FlexBox';
 import { Input } from '../elements/Input';
+import { login } from '../state/userSlice';
 import { useLogin } from '../useLogin';
 
 function FormLogin() {
-  const [login, setLogin] = useState('');
-  const { onLogin } = useLogin();
+  const [userName, setUserName] = useState('');
+  const dispatch = useDispatch();
+
+  useLogin();
 
   return (
     <FlexBox justifyContent={'center'}>
@@ -15,10 +19,10 @@ function FormLogin() {
           id="login"
           placeholder="Введите ваше имя"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setLogin(e.target.value)
+            setUserName(e.target.value)
           }
         />
-        <button type="button" onClick={() => onLogin(login)}>
+        <button type="button" onClick={() => dispatch(login(userName))}>
           Старт
         </button>
       </FlexBox>

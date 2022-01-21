@@ -1,31 +1,37 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-
 import App from './App';
 import { HashRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './state/store';
 
-global.Storage.prototype.getItem = jest.fn(() => 'test user');
-global.Storage.prototype.setItem = jest.fn();
+jest.mock('./localStorage', () => ({
+  loadLogin: () => 'init login',
+}));
 
 describe('App', () => {
-  test('render', () => {
+  test('render page game loggined user', () => {
     render(
-      <HashRouter>
-        <App />
-      </HashRouter>
+      <Provider store={store}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </Provider>
     );
     expect(screen.queryByRole('heading')).toBeInTheDocument();
     expect(screen.queryByRole('toolbar')).toBeInTheDocument();
     expect(screen.queryByRole('main')).toBeInTheDocument();
     expect(screen.queryByText('Game of life')).toBeInTheDocument();
-    expect(screen.queryByText('test user')).toBeInTheDocument();
+    expect(screen.queryByText('init login')).toBeInTheDocument();
   });
 
-  test('change inputBoardSizeX', () => {
+  test('change inputBoardSizeX loggined user', () => {
     render(
-      <HashRouter>
-        <App />
-      </HashRouter>
+      <Provider store={store}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </Provider>
     );
     const inputBoardSizeX = screen.getByTestId('inputBoardSizeX');
     fireEvent.change(inputBoardSizeX, {
@@ -37,9 +43,11 @@ describe('App', () => {
 
   test('start pause', () => {
     render(
-      <HashRouter>
-        <App />
-      </HashRouter>
+      <Provider store={store}>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </Provider>
     );
     fireEvent.click(screen.getByTestId('s-btn-start'));
     expect(screen.queryByTestId('s-btn-start')).not.toBeInTheDocument();

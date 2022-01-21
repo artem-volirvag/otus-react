@@ -1,5 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import reducer, { onLogin, onLogout, setUser } from './userSlice';
+import { expectSaga } from 'redux-saga-test-plan';
+import reducer, { login, onLogin, onLogout, setUser } from './userSlice';
+import { loadLogin } from '../localStorage';
 
 describe('userSlice reducer', () => {
   it('setUser', () => {
@@ -8,14 +9,25 @@ describe('userSlice reducer', () => {
   });
 
   it('onLogin', () => {
-    const store = configureStore({ reducer });
-    store.dispatch(onLogin('my name'));
-    expect(store.getState()).toEqual({ name: 'my name' });
+    const testUserName = 'my name';
+    const res = expectSaga(onLogin, { type: login.type, payload: testUserName })
+      .withReducer(reducer)
+      .hasFinalState({
+        name: testUserName,
+      })
+      .run();
+    expect(loadLogin()).toBe(testUserName);
+    return res;
   });
 
   it('onLogout', () => {
-    const store = configureStore({ reducer });
-    store.dispatch(onLogout());
-    expect(store.getState()).toEqual({ name: '' });
+    const res = expectSaga(onLogout)
+      .withReducer(reducer)
+      .hasFinalState({
+        name: '',
+      })
+      .run();
+    expect(loadLogin()).toBe('');
+    return res;
   });
 });

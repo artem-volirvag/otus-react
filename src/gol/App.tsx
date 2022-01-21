@@ -1,33 +1,27 @@
-import React, { useReducer } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Board from './components/Board';
 import Settings from './components/Settings';
 import { FlexBox } from './elements/FlexBox';
-import reducer from './state/Reducer';
-import { GameSettings, State } from './types';
-import { generateBoard } from './utils';
 import { useLogin } from './useLogin';
-
-const initialSettings: GameSettings = {
-  boardFillPercent: 15,
-  speed: 2,
-  boardSize: {
-    x: 50,
-    y: 50,
-  },
-};
-
-const initialState: State = {
-  settings: initialSettings,
-  status: 'stop',
-  cellsData: generateBoard(initialSettings),
-};
+import { selectState } from './state/store';
+import {
+  setSettings,
+  reStart,
+  start,
+  clear,
+  pause,
+  toggleCell,
+} from './state/appSlice';
+import { logout } from './state/userSlice';
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const state = useSelector(selectState);
+  const dispatch = useDispatch();
 
-  const { login, onLogout } = useLogin();
+  const { isLogined } = useLogin();
 
-  if (!login) return null;
+  if (!isLogined) return null;
 
   return (
     <>
@@ -35,31 +29,25 @@ function App() {
       <FlexBox>
         <FlexBox flexDirection={'vertical'}>
           <div>
-            Здравствуйте, <strong>{login}</strong>
+            Здравствуйте, <strong>{state.user.name}</strong>
           </div>
-          <button type="button" onClick={onLogout}>
+          <button type="button" onClick={() => dispatch(logout())}>
             Выход
           </button>
           <Settings
-            settings={state.settings}
-            status={state.status}
-            onChangeSettings={(settings) =>
-              dispatch({ type: 'setSettings', payload: settings })
-            }
-            onReStart={(settings) =>
-              dispatch({ type: 'reStart', payload: settings })
-            }
-            onStart={() => dispatch({ type: 'start' })}
-            onClear={() => dispatch({ type: 'clear' })}
-            onPause={() => dispatch({ type: 'pause' })}
+            settings={state.app.settings}
+            status={state.app.status}
+            onChangeSettings={(settings) => dispatch(setSettings(settings))}
+            onReStart={(settings) => dispatch(reStart(settings))}
+            onStart={() => dispatch(start())}
+            onClear={() => dispatch(clear())}
+            onPause={() => dispatch(pause())}
           />
         </FlexBox>
         <div>
           <Board
-            cellsData={state.cellsData}
-            onCellClick={(coord) =>
-              dispatch({ type: 'toggleCell', payload: coord })
-            }
+            cellsData={state.app.cellsData}
+            onCellClick={(coord) => dispatch(toggleCell(coord))}
           />
         </div>
       </FlexBox>
