@@ -1,32 +1,20 @@
-import { loadLogin, saveLogin } from './localStorage';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from './constants';
+import { useSelector } from 'react-redux';
+import { selectIsLogined } from './state/store';
 
 export function useLogin() {
   const navigate = useNavigate();
-
-  const loginRef = useRef<string | null>(loadLogin());
+  const isLogined = useSelector(selectIsLogined);
 
   useEffect(() => {
-    // loginRef.current = loadLogin();
-    if (!loginRef.current) {
-      navigate('/login');
+    if (!isLogined) {
+      navigate(ROUTE.LOGIN);
+    } else {
+      navigate(ROUTE.ROOT);
     }
-  }, []);
+  }, [isLogined]);
 
-  const onLogin = (login: string) => {
-    if (!login) return;
-    saveLogin(login);
-    loginRef.current = login;
-    navigate(ROUTE.ROOT);
-  };
-
-  const onLogout = () => {
-    saveLogin('');
-    loginRef.current = null;
-    navigate(ROUTE.LOGIN);
-  };
-
-  return { login: loginRef.current, onLogin, onLogout };
+  return { isLogined };
 }

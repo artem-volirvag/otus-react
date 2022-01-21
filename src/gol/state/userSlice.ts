@@ -1,32 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadLogin, saveLogin } from '../localStorage';
-import { UserState } from '../types';
-import { AppDispatch } from './store';
-
-const initialState: UserState = {
-  name: loadLogin() || '',
-};
+import { put } from 'redux-saga/effects';
+import { AppActionLogin } from './saga';
 
 export const userSlice = createSlice({
-  initialState,
+  initialState: {
+    name: loadLogin() || '',
+  },
   name: 'user',
   reducers: {
     setUser: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    login: (_state, _action: PayloadAction<string>) => void 0,
+    logout: () => void 0,
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, login, logout } = userSlice.actions;
 
 export default userSlice.reducer;
 
-export const onLogin = (name: string) => async (dispatch: AppDispatch) => {
+export function* onLogin(action: AppActionLogin) {
+  const name = action.payload;
   saveLogin(name);
-  dispatch(setUser(name));
-};
+  yield put(setUser(name));
+}
 
-export const onLogout = () => async (dispatch: AppDispatch) => {
+export function* onLogout() {
   saveLogin('');
-  dispatch(setUser(''));
-};
+  yield put(setUser(''));
+}
