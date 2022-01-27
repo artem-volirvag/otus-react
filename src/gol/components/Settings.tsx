@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from '../elements/Button';
 import { FlexBox } from '../elements/FlexBox';
 import InputRange from '../elements/InputRange';
 import { GameSettings, GameStatus } from '../types';
@@ -29,6 +30,8 @@ function Settings(props: SettingsProps) {
   const [boardSizeY, setBoardSizeY] = useState<number>(boardSize.y);
   const [gameSpeed, setGameSpeed] = useState(speed);
   const [boardFill, setBoardFill] = useState<number>(boardFillPercent);
+  const [changed, setChanged] = useState(false);
+  const [changedNew, setChangedNew] = useState(false);
 
   const getNewSettings = () => {
     return {
@@ -43,15 +46,39 @@ function Settings(props: SettingsProps) {
 
   const save = () => {
     onChangeSettings(getNewSettings());
+    setChanged(false);
   };
 
   const cancel = () => {
     setBoardSizeX(boardSize.x);
     setBoardSizeY(boardSize.y);
+    setGameSpeed(speed);
+    setChanged(false);
   };
 
   const reRun = () => {
     onReStart(getNewSettings());
+    setChangedNew(false);
+  };
+
+  const onChangeBoardSizeX = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBoardSizeX(parseInt(e.target.value, 10));
+    setChanged(true);
+  };
+
+  const onChangeBoardSizeY = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBoardSizeY(parseInt(e.target.value, 10));
+    setChanged(true);
+  };
+
+  const onChangeSpeed = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGameSpeed(parseInt(e.target.value, 10));
+    setChanged(true);
+  };
+
+  const onChangeBoardFillPercent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBoardFill(parseInt(e.target.value, 10));
+    setChangedNew(true);
   };
 
   return (
@@ -63,10 +90,8 @@ function Settings(props: SettingsProps) {
           data-testid="inputBoardSizeX"
           value={boardSizeX}
           min={3}
-          max={100}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setBoardSizeX(parseInt(e.target.value, 10))
-          }
+          max={80}
+          onChange={onChangeBoardSizeX}
         />
         <label htmlFor="boardSizeY">Высота поля</label>
         <InputRange
@@ -74,10 +99,8 @@ function Settings(props: SettingsProps) {
           data-testid="inputBoardSizeY"
           value={boardSizeY}
           min={3}
-          max={100}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setBoardSizeY(parseInt(e.target.value, 10))
-          }
+          max={80}
+          onChange={onChangeBoardSizeY}
         />
         <label htmlFor="speed">Скорость</label>
         <InputRange
@@ -86,18 +109,27 @@ function Settings(props: SettingsProps) {
           value={gameSpeed}
           min={0}
           max={3}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setGameSpeed(parseInt(e.target.value, 10))
-          }
+          onChange={onChangeSpeed}
         />
       </div>
-      <FlexBox flexDirection={'horisontal'}>
-        <button type="button" onClick={save} data-testid="s-btn-ok">
+      <FlexBox flexDirection={'horisontal'} justifyContent={'center'}>
+        <Button
+          type="button"
+          onClick={save}
+          data-testid="s-btn-ok"
+          mode={changed ? 'primary' : undefined}
+          disabled={!changed}
+        >
           Применить
-        </button>
-        <button type="button" onClick={cancel} data-testid="s-btn-cancel">
+        </Button>
+        <Button
+          type="button"
+          onClick={cancel}
+          data-testid="s-btn-cancel"
+          disabled={!changed}
+        >
           Отменить
-        </button>
+        </Button>
       </FlexBox>
       <label htmlFor="inputBoardFillPercent">
         Начальный процент заполнения
@@ -108,25 +140,38 @@ function Settings(props: SettingsProps) {
         value={boardFill}
         max={99}
         min={0}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setBoardFill(parseInt(e.target.value, 10))
-        }
+        onChange={onChangeBoardFillPercent}
       />
-      <button type="button" onClick={reRun} data-testid="s-btn-reStart">
+      <Button
+        type="button"
+        onClick={reRun}
+        data-testid="s-btn-reStart"
+        mode={changedNew ? 'primary' : undefined}
+      >
         Начать заново
-      </button>
-      {status === 'play' ? (
-        <button type="button" onClick={onPause} data-testid="s-btn-pause">
-          Пауза
-        </button>
-      ) : (
-        <button type="button" onClick={onStart} data-testid="s-btn-start">
-          {status === 'pause' ? 'Возобновить' : 'Старт'}
-        </button>
-      )}
-      <button type="button" onClick={onClear} data-testid="s-btn-clear">
+      </Button>
+      <Button type="button" onClick={onClear} data-testid="s-btn-clear">
         Очистить
-      </button>
+      </Button>
+      {status === 'play' ? (
+        <Button
+          type="button"
+          onClick={onPause}
+          data-testid="s-btn-pause"
+          mode="secondary"
+        >
+          Пауза
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          onClick={onStart}
+          data-testid="s-btn-start"
+          mode="primary"
+        >
+          {status === 'pause' ? 'Возобновить' : 'Старт'}
+        </Button>
+      )}
     </FlexBox>
   );
 }

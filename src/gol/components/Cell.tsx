@@ -24,16 +24,20 @@ interface CellProps extends CellStyledProps {
   y: number;
 }
 
-const Cell: React.FC<CellProps> = (props) => {
+const Cell: React.FC<CellProps> = React.memo((props) => {
   const { cellState, x, y, onClick } = props;
+
+  const handleOnClick = () => onClick({ x, y });
 
   return (
     <CellStyled
       cellState={cellState}
       data-testid={`${y}-${x}`}
-      onClick={() => onClick({ x, y })}
+      onClick={handleOnClick}
     />
   );
-};
+});
+
+Cell.displayName = 'Cell';
 
 export default Cell;

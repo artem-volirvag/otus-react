@@ -75,9 +75,13 @@ describe('appSlice reducer', () => {
   });
 
   it('reStart', () => {
-    const newSettings = { boardFillPercent: 10, boardSize: { x: 10, y: 10 } };
+    const newSettings = {
+      boardFillPercent: 10,
+      boardSize: { x: 10, y: 10 },
+      speed: 2,
+    };
     const newState = reducer(initState, reStart(newSettings));
-    expect(newState.status).toBe('play');
+    expect(newState.status).toBe('stop');
     expect(newState.settings).toEqual(newSettings);
     expect(newState.cellsData).toHaveLength(10);
     expect(newState.cellsData[0]).toHaveLength(10);

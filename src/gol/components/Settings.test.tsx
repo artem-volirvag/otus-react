@@ -100,6 +100,23 @@ describe('Settings', () => {
     expect(screen.getByTestId('s-btn-start')).toBeInTheDocument();
   });
 
+  test('disabled button save', async () => {
+    const onChangeSettings = jest.fn();
+    render(
+      <Settings
+        onClear={() => null}
+        onPause={() => null}
+        onChangeSettings={onChangeSettings}
+        onReStart={() => null}
+        onStart={() => null}
+        settings={settingsInitial}
+        status={'play'}
+      />
+    );
+    fireEvent.click(screen.getByTestId('s-btn-ok'));
+    expect(onChangeSettings).toHaveBeenCalledTimes(0);
+  });
+
   test('buttons', async () => {
     const onClear = jest.fn();
     const onPause = jest.fn();
@@ -123,7 +140,5 @@ describe('Settings', () => {
     expect(onReStart).toHaveBeenCalledTimes(1);
     fireEvent.click(screen.getByTestId('s-btn-pause'));
     expect(onPause).toHaveBeenCalledTimes(1);
-    fireEvent.click(screen.getByTestId('s-btn-ok'));
-    expect(onChangeSettings).toHaveBeenCalledTimes(1);
   });
 });
