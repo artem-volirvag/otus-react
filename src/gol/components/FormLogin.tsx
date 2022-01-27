@@ -11,6 +11,13 @@ function FormLogin() {
 
   useLogin();
 
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value && e.target.value.trim();
+    setUserName(name);
+  };
+
+  const onLogin = () => dispatch(login(userName));
+
   return (
     <FlexBox justifyContent={'center'}>
       <FlexBox flexDirection={'vertical'} width={'200px'}>
@@ -18,11 +25,9 @@ function FormLogin() {
           type="text"
           id="login"
           placeholder="Введите ваше имя"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setUserName(e.target.value)
-          }
+          onChange={onChangeName}
         />
-        <button type="button" onClick={() => dispatch(login(userName))}>
+        <button type="button" onClick={onLogin}>
           Старт
         </button>
       </FlexBox>

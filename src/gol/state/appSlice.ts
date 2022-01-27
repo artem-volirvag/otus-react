@@ -49,7 +49,7 @@ export const appSlice = createSlice({
     },
     reStart: (state, action: PayloadAction<GameSettings>) => {
       state.cellsData = generateBoard(action.payload);
-      state.status = 'play';
+      state.status = 'stop';
       state.settings = action.payload;
     },
     start: (state) => {

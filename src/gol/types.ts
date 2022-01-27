@@ -15,7 +15,7 @@ export interface BoardSize {
 export interface GameSettings {
   boardSize: BoardSize;
   boardFillPercent: number;
-  speed?: number;
+  speed: number;
 }
 
 export interface State {

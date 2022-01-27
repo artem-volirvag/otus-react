@@ -21,7 +21,7 @@ describe('App', () => {
     expect(screen.queryByRole('heading')).toBeInTheDocument();
     expect(screen.queryByRole('toolbar')).toBeInTheDocument();
     expect(screen.queryByRole('main')).toBeInTheDocument();
-    expect(screen.queryByText('Game of life')).toBeInTheDocument();
+    expect(screen.queryByText('Игра «Жизнь»')).toBeInTheDocument();
     expect(screen.queryByText('init login')).toBeInTheDocument();
   });
 

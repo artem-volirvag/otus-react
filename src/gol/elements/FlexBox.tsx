@@ -15,6 +15,6 @@ export const FlexBox = styled.div((props: FlexBoxProps) => ({
   gap: props.gap || '.5rem',
   alignItems: props.alignItems || 'unset',
   justifyContent: props.justifyContent || 'unset',
-  fontFamily: 'Roboto, Golos',
+  fontFamily: 'Roboto, Golos, monospace',
   width: props.width,
 }));
