@@ -1,9 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { delay, put, select } from 'redux-saga/effects';
 import { cellStateAlive, cellStateEmpty } from '../constants';
 import { CellsData, Coordinates, GameSettings, State } from '../types';
-import { generateBoard, generateBoardXY, resizeBoard } from '../utils';
+import {
+  generateBoard,
+  generateBoardXY,
+  nextGeneration,
+  resizeBoard,
+  speedToMs,
+} from '../utils';
+import { getApp } from './saga';
+import { logout } from './userSlice';
 
-const initialSettings: GameSettings = {
+export const initialSettings: GameSettings = {
   boardFillPercent: 15,
   speed: 2,
   boardSize: {
@@ -17,6 +26,15 @@ const initialState: State = {
   status: 'stop',
   cellsData: generateBoard(initialSettings),
 };
+
+export function* playGame() {
+  while (true) {
+    const app: State = yield select(getApp);
+    if (app.status !== 'play') break;
+    yield put(setCellsData(nextGeneration(app.cellsData)));
+    yield delay(speedToMs(app.settings.speed));
+  }
+}
 
 export const appSlice = createSlice({
   name: 'app',
@@ -64,6 +82,13 @@ export const appSlice = createSlice({
         cellStateEmpty
       );
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout.type, (state) => {
+      state.status = 'stop';
+      state.settings = initialSettings;
+      state.cellsData = generateBoard(initialSettings);
+    });
   },
 });
 

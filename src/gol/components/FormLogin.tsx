@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Button } from '../elements/Button';
 import { FlexBox } from '../elements/FlexBox';
 import { Input } from '../elements/Input';
 import { login } from '../state/userSlice';
@@ -27,9 +28,9 @@ function FormLogin() {
           placeholder="Введите ваше имя"
           onChange={onChangeName}
         />
-        <button type="button" onClick={onLogin}>
+        <Button type="button" onClick={onLogin} mode={'primary'}>
           Старт
-        </button>
+        </Button>
       </FlexBox>
     </FlexBox>
   );

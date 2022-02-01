@@ -24,16 +24,22 @@ describe('Settings', () => {
     );
     const inputBoardSizeX = screen.getByTestId('inputBoardSizeX');
     expect(inputBoardSizeX).toBeInTheDocument();
-    expect(inputBoardSizeX).toHaveDisplayValue('10');
+    expect(inputBoardSizeX).toHaveDisplayValue(
+      `${settingsInitial.boardSize.x}`
+    );
     const inputBoardSizeY = screen.getByTestId('inputBoardSizeY');
     expect(inputBoardSizeY).toBeInTheDocument();
-    expect(inputBoardSizeY).toHaveDisplayValue('20');
+    expect(inputBoardSizeY).toHaveDisplayValue(
+      `${settingsInitial.boardSize.y}`
+    );
     const inputSpeed = screen.getByTestId('inputSpeed');
     expect(inputSpeed).toBeInTheDocument();
-    expect(inputSpeed).toHaveDisplayValue('1');
+    expect(inputSpeed).toHaveDisplayValue(`${settingsInitial.speed}`);
     const inputBoardFillPercent = screen.getByTestId('inputBoardFillPercent');
     expect(inputBoardFillPercent).toBeInTheDocument();
-    expect(inputBoardFillPercent).toHaveDisplayValue('50');
+    expect(inputBoardFillPercent).toHaveDisplayValue(
+      `${settingsInitial.boardFillPercent}`
+    );
     expect(screen.getByTestId('s-btn-ok')).toBeInTheDocument();
     expect(screen.getByTestId('s-btn-cancel')).toBeInTheDocument();
     expect(screen.getByTestId('s-btn-reStart')).toBeInTheDocument();
@@ -100,7 +106,7 @@ describe('Settings', () => {
     expect(screen.getByTestId('s-btn-start')).toBeInTheDocument();
   });
 
-  test('disabled button save', async () => {
+  test('disabled buttons ok', async () => {
     const onChangeSettings = jest.fn();
     render(
       <Settings
@@ -110,7 +116,7 @@ describe('Settings', () => {
         onReStart={() => null}
         onStart={() => null}
         settings={settingsInitial}
-        status={'play'}
+        status={'pause'}
       />
     );
     fireEvent.click(screen.getByTestId('s-btn-ok'));
@@ -140,5 +146,26 @@ describe('Settings', () => {
     expect(onReStart).toHaveBeenCalledTimes(1);
     fireEvent.click(screen.getByTestId('s-btn-pause'));
     expect(onPause).toHaveBeenCalledTimes(1);
+  });
+
+  test('button cancel should reset changes', async () => {
+    render(
+      <Settings
+        onClear={() => null}
+        onPause={() => null}
+        onChangeSettings={() => null}
+        onReStart={() => null}
+        onStart={() => null}
+        settings={settingsInitial}
+        status={'pause'}
+      />
+    );
+    const inputBoardSizeX = screen.getByTestId('inputBoardSizeX');
+    expect(inputBoardSizeX).toHaveDisplayValue('10');
+    fireEvent.change(inputBoardSizeX, {
+      target: { value: 30 },
+    });
+    fireEvent.click(screen.getByTestId('s-btn-cancel'));
+    expect(inputBoardSizeX).toHaveDisplayValue('10');
   });
 });

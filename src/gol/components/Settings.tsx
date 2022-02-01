@@ -89,7 +89,7 @@ function Settings(props: SettingsProps) {
           id="boardSizeX"
           data-testid="inputBoardSizeX"
           value={boardSizeX}
-          min={3}
+          min={10}
           max={80}
           onChange={onChangeBoardSizeX}
         />
@@ -98,7 +98,7 @@ function Settings(props: SettingsProps) {
           id="boardSizeY"
           data-testid="inputBoardSizeY"
           value={boardSizeY}
-          min={3}
+          min={10}
           max={80}
           onChange={onChangeBoardSizeY}
         />

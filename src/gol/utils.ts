@@ -58,3 +58,66 @@ export function resizeBoard(cellsData: CellsData, boardSize: BoardSize) {
   });
   return newCellsData;
 }
+
+export function nextGeneration(cellsData: CellsData) {
+  const newCellsData = generateBoardXY(
+    { x: cellsData[0].length, y: cellsData.length },
+    cellStateEmpty
+  );
+  for (let y = 0; y < cellsData.length; y++) {
+    for (let x = 0; x < cellsData[y].length; x++) {
+      newCellsData[y][x] = getNewState(cellsData, x, y);
+    }
+  }
+  return newCellsData;
+}
+
+export function getNewState(cellsData: CellsData, x: number, y: number) {
+  const numAlive = countSurrounding(cellsData, x, y);
+  if (numAlive == 2) {
+    return cellsData[y][x];
+  } else if (numAlive == 3) {
+    return cellStateAlive;
+  } else {
+    return cellStateEmpty;
+  }
+}
+
+export function countSurrounding(
+  cellsData: CellsData,
+  x: number,
+  y: number
+): number {
+  return (
+    isAlive(cellsData, x - 1, y - 1) +
+    isAlive(cellsData, x, y - 1) +
+    isAlive(cellsData, x + 1, y - 1) +
+    isAlive(cellsData, x - 1, y) +
+    isAlive(cellsData, x + 1, y) +
+    isAlive(cellsData, x - 1, y + 1) +
+    isAlive(cellsData, x, y + 1) +
+    isAlive(cellsData, x + 1, y + 1)
+  );
+}
+
+export function isAlive(cellsData: CellsData, x: number, y: number): CellState {
+  if (y < 0 || y >= cellsData.length || x < 0 || x >= cellsData[y].length) {
+    return cellStateEmpty;
+  }
+  return cellsData[y][x];
+}
+
+export function speedToMs(speed: number): number {
+  switch (speed) {
+    case 0:
+      return 1000;
+    case 1:
+      return 500;
+    case 2:
+      return 250;
+    case 3:
+      return 100;
+    default:
+      return 500;
+  }
+}
