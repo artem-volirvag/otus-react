@@ -7,7 +7,9 @@ import reducer, {
   setCellsData,
   start,
   toggleCell,
+  initialSettings,
 } from './appSlice';
+import { logout } from './userSlice';
 
 describe('appSlice reducer', () => {
   const initState: State = {
@@ -100,5 +102,12 @@ describe('appSlice reducer', () => {
     expect(newState.settings).toEqual(initState.settings);
     expect(newState.cellsData).toHaveLength(initState.settings.boardSize.y);
     expect(newState.cellsData[0]).toHaveLength(initState.settings.boardSize.x);
+  });
+
+  it('logout should reset state to init', () => {
+    const newState = reducer(initState, logout());
+    expect(newState.settings).toEqual(initialSettings);
+    expect(newState.cellsData).toHaveLength(initialSettings.boardSize.y);
+    expect(newState.cellsData[0]).toHaveLength(initialSettings.boardSize.x);
   });
 });

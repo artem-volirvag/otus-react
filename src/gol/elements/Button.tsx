@@ -10,13 +10,11 @@ export const Button = styled.button((props: ButtonProps) => ({
   backgroundColor: getBackgroundColor(props.mode),
 }));
 
+const backgroundColor = {
+  primary: 'lightgreen',
+  secondary: '#fafad2',
+};
+
 function getBackgroundColor(mode: ButtonProps['mode']) {
-  switch (mode) {
-    case 'primary':
-      return 'lightgreen';
-    case 'secondary':
-      return '#fafad2';
-    default:
-      return '#fff';
-  }
+  return (mode && backgroundColor[mode]) || '#fff';
 }
