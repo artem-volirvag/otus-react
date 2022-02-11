@@ -168,4 +168,151 @@ describe('Settings', () => {
     fireEvent.click(screen.getByTestId('s-btn-cancel'));
     expect(inputBoardSizeX).toHaveDisplayValue('10');
   });
+
+  test('snapshot Settings', () => {
+    const { container } = render(
+      <Settings
+        onClear={() => null}
+        onPause={() => null}
+        onChangeSettings={() => null}
+        onReStart={() => null}
+        onStart={() => null}
+        settings={settingsInitial}
+        status={'pause'}
+      />
+    );
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="css-1d87e53"
+          role="toolbar"
+        >
+          <div>
+            <label
+              for="boardSizeX"
+            >
+              Ширина поля
+            </label>
+            <div
+              class="css-10t62ag"
+            >
+              <input
+                data-testid="inputBoardSizeX"
+                id="boardSizeX"
+                max="80"
+                min="10"
+                type="range"
+                value="10"
+              />
+              <span>
+                10
+              </span>
+            </div>
+            <label
+              for="boardSizeY"
+            >
+              Высота поля
+            </label>
+            <div
+              class="css-10t62ag"
+            >
+              <input
+                data-testid="inputBoardSizeY"
+                id="boardSizeY"
+                max="80"
+                min="10"
+                type="range"
+                value="20"
+              />
+              <span>
+                20
+              </span>
+            </div>
+            <label
+              for="speed"
+            >
+              Скорость
+            </label>
+            <div
+              class="css-10t62ag"
+            >
+              <input
+                data-testid="inputSpeed"
+                id="speed"
+                max="4"
+                min="1"
+                type="range"
+                value="1"
+              />
+              <span>
+                1
+              </span>
+            </div>
+          </div>
+          <div
+            class="css-13r8s1v"
+          >
+            <button
+              class="css-l5r2k1"
+              data-testid="s-btn-ok"
+              disabled=""
+              type="button"
+            >
+              Применить
+            </button>
+            <button
+              class="css-l5r2k1"
+              data-testid="s-btn-cancel"
+              disabled=""
+              type="button"
+            >
+              Отменить
+            </button>
+          </div>
+          <label
+            for="inputBoardFillPercent"
+          >
+            Начальный процент заполнения
+          </label>
+          <div
+            class="css-10t62ag"
+          >
+            <input
+              data-testid="inputBoardFillPercent"
+              id="inputBoardFillPercent"
+              max="99"
+              min="0"
+              type="range"
+              value="50"
+            />
+            <span>
+              50
+            </span>
+          </div>
+          <button
+            class="css-l5r2k1"
+            data-testid="s-btn-reStart"
+            type="button"
+          >
+            Начать заново
+          </button>
+          <button
+            class="css-l5r2k1"
+            data-testid="s-btn-clear"
+            type="button"
+          >
+            Очистить
+          </button>
+          <button
+            class="css-1965y3k"
+            data-testid="s-btn-start"
+            mode="primary"
+            type="button"
+          >
+            Возобновить
+          </button>
+        </div>
+      </div>
+    `);
+  });
 });

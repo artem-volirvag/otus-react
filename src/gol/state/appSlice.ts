@@ -9,8 +9,8 @@ import {
   resizeBoard,
   speedToMs,
 } from '../utils';
-import { getApp } from './saga';
-import { logout } from './userSlice';
+import { selectApp } from './selectors';
+import { userActions } from './userSlice';
 
 export const initialSettings: GameSettings = {
   boardFillPercent: 15,
@@ -21,7 +21,7 @@ export const initialSettings: GameSettings = {
   },
 };
 
-const initialState: State = {
+export const initialState: State = {
   settings: initialSettings,
   status: 'stop',
   cellsData: generateBoard(initialSettings),
@@ -29,9 +29,9 @@ const initialState: State = {
 
 export function* playGame() {
   while (true) {
-    const app: State = yield select(getApp);
+    const app: State = yield select(selectApp);
     if (app.status !== 'play') break;
-    yield put(setCellsData(nextGeneration(app.cellsData)));
+    yield put(appActions.setCellsData(nextGeneration(app.cellsData)));
     yield delay(speedToMs(app.settings.speed));
   }
 }
@@ -57,8 +57,8 @@ export const appSlice = createSlice({
     },
     toggleCell: (state, action: PayloadAction<Coordinates>) => {
       const coord = action.payload;
-      if (state.cellsData.length < coord.y || coord.y < 0) return;
-      if (coord.x < 0 || state.cellsData[coord.y].length < coord.x) return;
+      if (coord.y >= state.cellsData.length || coord.y < 0) return;
+      if (coord.x < 0 || coord.x >= state.cellsData[coord.y].length) return;
       const cellsData = state.cellsData;
       cellsData[coord.y][coord.x] =
         cellsData[coord.y][coord.x] === cellStateAlive
@@ -84,7 +84,7 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(logout.type, (state) => {
+    builder.addCase(userActions.logout.type, (state) => {
       state.status = 'stop';
       state.settings = initialSettings;
       state.cellsData = generateBoard(initialSettings);
@@ -92,16 +92,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const {
-  clear,
-  pause,
-  reStart,
-  setCellsData,
-  setSettings,
-  start,
-  toggleCell,
-} = appSlice.actions;
-
-export const selectApp = (state: State) => state;
+export const appActions = appSlice.actions;
 
 export default appSlice.reducer;

@@ -109,13 +109,13 @@ export function isAlive(cellsData: CellsData, x: number, y: number): CellState {
 
 export function speedToMs(speed: number): number {
   switch (speed) {
-    case 0:
-      return 1000;
     case 1:
-      return 500;
+      return 1000;
     case 2:
-      return 250;
+      return 500;
     case 3:
+      return 250;
+    case 4:
       return 100;
     default:
       return 500;
