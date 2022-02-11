@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from './constants';
 import { useSelector } from 'react-redux';
-import { selectIsLogined } from './state/store';
+import { selectIsLogined } from './state/selectors';
 
 export function useLogin() {
   const navigate = useNavigate();

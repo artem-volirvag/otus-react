@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadLogin, saveLogin } from '../localStorage';
 import { put } from 'redux-saga/effects';
-import { AppActionLogin } from './saga';
 
 export const userSlice = createSlice({
   initialState: {
@@ -18,17 +17,23 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, login, logout } = userSlice.actions;
+export const userActions = userSlice.actions;
 
 export default userSlice.reducer;
+
+export type AppActionLogin = {
+  type: typeof userActions.login.type;
+  payload: string;
+};
+export type AppActionLogout = { type: typeof userActions.logout.type };
 
 export function* onLogin(action: AppActionLogin) {
   const name = action.payload;
   saveLogin(name);
-  yield put(setUser(name));
+  yield put(userActions.setUser(name));
 }
 
 export function* onLogout() {
   saveLogin('');
-  yield put(setUser(''));
+  yield put(userActions.setUser(''));
 }

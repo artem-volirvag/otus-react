@@ -25,7 +25,3 @@ export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-export const selectState = (state: RootState): RootState => state;
-export const selectIsLogined = (state: RootState): boolean =>
-  state.user && state.user.name !== '';

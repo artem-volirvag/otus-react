@@ -4,12 +4,13 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import store from '../state/store';
 import FormLogin from './FormLogin';
-import { userSlice } from '../state/userSlice';
+import { userActions } from '../state/userSlice';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { loadLogin } from '../localStorage';
 
 describe('FormLogin', () => {
-  test('render', async () => {
+  test('should input Login and submit', async () => {
+    jest.spyOn(userActions, 'login');
     render(
       <Provider store={store}>
         <HashRouter>
@@ -22,27 +23,16 @@ describe('FormLogin', () => {
     );
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Старт' })).toBeInTheDocument();
-  });
-
-  test('input Login', async () => {
-    render(
-      <Provider store={store}>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<FormLogin />} />
-            <Route path="/login" element={<FormLogin />} />
-          </Routes>
-        </HashRouter>
-      </Provider>
-    );
     expect(screen.queryByText(/Имя/)).toBeNull();
     await userEvent.type(screen.getByRole('textbox'), 'Имя');
     expect(screen.queryByDisplayValue('Имя')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Старт' }));
+    expect(userActions.login).toBeCalled();
+    expect(loadLogin()).toBe('Имя');
   });
 
-  test('input Login and submit', async () => {
-    jest.spyOn(userSlice.actions, 'login');
-    render(
+  test('snapshot FormLogin', () => {
+    const { container } = render(
       <Provider store={store}>
         <HashRouter>
           <Routes>
@@ -52,8 +42,32 @@ describe('FormLogin', () => {
         </HashRouter>
       </Provider>
     );
-    await userEvent.type(screen.getByRole('textbox'), 'Имя');
-    await userEvent.click(screen.getByRole('button', { name: 'Старт' }));
-    expect(loadLogin()).toBe('Имя');
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="css-13r8s1v"
+        >
+          <div
+            class="css-nhm8x0"
+            width="200px"
+          >
+            <input
+              class="css-15axbp4"
+              id="login"
+              placeholder="Введите ваше имя"
+              type="text"
+              value=""
+            />
+            <button
+              class="css-1965y3k"
+              mode="primary"
+              type="button"
+            >
+              Старт
+            </button>
+          </div>
+        </div>
+      </div>
+    `);
   });
 });

@@ -5,7 +5,7 @@ interface FlexBoxProps {
   flexDirection?: 'vertical' | 'horisontal';
   alignItems?: string;
   justifyContent?: string;
-  gap?: number;
+  gap?: string;
   width?: string;
 }
 

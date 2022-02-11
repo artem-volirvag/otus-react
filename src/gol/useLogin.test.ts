@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useLogin } from './useLogin';
 import { ROUTE } from './constants';
-import { selectIsLogined } from './state/store';
+import { selectIsLogined } from './state/selectors';
 
 const mockNavigate = jest.fn();
 
@@ -12,14 +12,14 @@ jest
   .mock('react-redux', () => ({
     useSelector: (selector: () => unknown) => selector(),
   }))
-  .mock('./state/store');
+  .mock('./state/selectors');
 
 describe('useLogin', () => {
   beforeEach(() => {
     mockNavigate.mockClear();
   });
 
-  test('Logined', async () => {
+  test('should navigate logined to root', async () => {
     (selectIsLogined as any).mockImplementation(() => true);
     const { result } = renderHook(useLogin);
     expect(result.current.isLogined).toEqual(true);
@@ -27,7 +27,7 @@ describe('useLogin', () => {
     expect(mockNavigate).toHaveBeenCalledWith(ROUTE.ROOT);
   });
 
-  test('not Logined', async () => {
+  test('should navigate not logined to login page', async () => {
     (selectIsLogined as any).mockImplementation(() => false);
     const { result } = renderHook(useLogin);
     expect(result.current.isLogined).toEqual(false);

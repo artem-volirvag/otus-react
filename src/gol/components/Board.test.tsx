@@ -39,4 +39,45 @@ describe('Board', () => {
     expect(onCellClick).toHaveBeenCalledTimes(1);
     expect(onCellClick).toHaveBeenCalledWith({ x, y });
   });
+
+  test('snapshot Settings', () => {
+    const cellsData: CellsData = [
+      [0, 1],
+      [1, 0],
+    ];
+    const { container } = render(
+      <Board cellsData={cellsData} onCellClick={() => null} />
+    );
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="css-17uzvqw"
+          role="main"
+          x="2"
+          y="2"
+        >
+          <div>
+            <span
+              class="css-1t9tzm9"
+              data-testid="0-0"
+            />
+            <span
+              class="css-1r7ktbl"
+              data-testid="0-1"
+            />
+          </div>
+          <div>
+            <span
+              class="css-1r7ktbl"
+              data-testid="1-0"
+            />
+            <span
+              class="css-1t9tzm9"
+              data-testid="1-1"
+            />
+          </div>
+        </div>
+      </div>
+    `);
+  });
 });

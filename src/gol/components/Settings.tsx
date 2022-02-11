@@ -107,8 +107,8 @@ function Settings(props: SettingsProps) {
           id="speed"
           data-testid="inputSpeed"
           value={gameSpeed}
-          min={0}
-          max={3}
+          min={1}
+          max={4}
           onChange={onChangeSpeed}
         />
       </div>

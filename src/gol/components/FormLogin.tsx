@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '../elements/Button';
 import { FlexBox } from '../elements/FlexBox';
 import { Input } from '../elements/Input';
-import { login } from '../state/userSlice';
+import { userActions } from '../state/userSlice';
 import { useLogin } from '../useLogin';
 
 function FormLogin() {
@@ -16,7 +16,7 @@ function FormLogin() {
     setUserName(e.target.value);
   };
 
-  const onLogin = () => dispatch(login(userName.trim()));
+  const onLogin = () => dispatch(userActions.login(userName.trim()));
 
   return (
     <FlexBox justifyContent={'center'}>
