@@ -1,0 +1,19 @@
+.history
+.vscode
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+dist
+
+# misc
+.DS_Store
+
+*.log*
+
+/storybook-static
+# stryker temp files
+.stryker-tmp
