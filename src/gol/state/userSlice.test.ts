@@ -33,4 +33,9 @@ describe('userSlice reducer', () => {
     expect(loadLogin()).toBe('');
     return res;
   });
+
+  it('logout', () => {
+    const newState = reducer({ name: '' }, userActions.logout());
+    expect(newState).toEqual({ name: '' });
+  });
 });

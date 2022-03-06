@@ -33,6 +33,9 @@ jobs:
       - run: npm install
       - run: npm run build
 
+      # copy report stryker to dist
+      - run: cp -u reports/mutation/html/index.html dist/stryker.html
+
         # 👇 Adds Chromatic as a step in the workflow
       - name: Publish to Chromatic
         uses: chromaui/action@v1
