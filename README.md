@@ -32,7 +32,7 @@
 https://artem-volirvag.github.io/otus-react/
 
 ### Storybook
-https://619bacabddf057003a8a3dee-ztaqsqmpel.chromatic.com
+https://619bacabddf057003a8a3dee-qvikfemflp.chromatic.com
 
 ### Покрытие тестами
 ```
