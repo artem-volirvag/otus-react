@@ -59,6 +59,7 @@ function Settings(props: SettingsProps) {
   const reRun = () => {
     onReStart(getNewSettings());
     setChangedNew(false);
+    setChanged(false);
   };
 
   const onChangeBoardSizeX = (e: React.ChangeEvent<HTMLInputElement>) => {

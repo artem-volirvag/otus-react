@@ -74,13 +74,10 @@ export function nextGeneration(cellsData: CellsData) {
 
 export function getNewState(cellsData: CellsData, x: number, y: number) {
   const numAlive = countSurrounding(cellsData, x, y);
-  if (numAlive == 2) {
-    return cellsData[y][x];
-  } else if (numAlive == 3) {
-    return cellStateAlive;
-  } else {
-    return cellStateEmpty;
-  }
+  return numAlive === 3 ||
+    (numAlive === 2 && cellsData[y][x] === cellStateAlive)
+    ? cellStateAlive
+    : cellStateEmpty;
 }
 
 export function countSurrounding(

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { delay, put, select } from 'redux-saga/effects';
+import { Task } from 'redux-saga';
+import { cancel, delay, fork, put, select, take } from 'redux-saga/effects';
 import { cellStateAlive, cellStateEmpty } from '../constants';
 import { CellsData, Coordinates, GameSettings, State } from '../types';
 import {
@@ -27,13 +28,18 @@ export const initialState: State = {
   cellsData: generateBoard(initialSettings),
 };
 
-export function* playGame() {
+export function* gameLoop() {
   while (true) {
     const app: State = yield select(selectApp);
-    if (app.status !== 'play') break;
     yield put(appActions.setCellsData(nextGeneration(app.cellsData)));
     yield delay(speedToMs(app.settings.speed));
   }
+}
+
+export function* playGame() {
+  const task: Task = yield fork(gameLoop);
+  yield take([appActions.pause.type, appActions.reStart.type]);
+  yield cancel(task);
 }
 
 export const appSlice = createSlice({
